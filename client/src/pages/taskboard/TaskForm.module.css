@@ -1,0 +1,52 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    color: black;
+  }
+  
+  .form label {
+    margin-top: 10px;
+  }
+  
+  .form input,
+  .form textarea {
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form button:hover {
+    background-color: #0056b3;
+  }
+
+  .priorityContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+  }
+  .priorities{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .priorities div {
+    flex: 1; 
+    text-align: center; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    cursor: pointer; 
+  }
+  

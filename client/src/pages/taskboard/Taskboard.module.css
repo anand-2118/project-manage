@@ -1,0 +1,20 @@
+.taskboards{
+    display: flex;
+    height: 75vh;
+    width: 100%;
+
+}
+
+.column{
+    height: 100%;
+    width: 20%;
+    background-color: blanchedalmond;
+    margin: 2% 0 0 4%;
+}
+
+.todoHead{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+

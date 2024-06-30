@@ -1,0 +1,34 @@
+.dashboard{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.sidebar{
+  height: 100%;
+  width: 20%;
+  background-color: green;
+}
+
+.right{
+  height: 100%;
+  width: 80%;
+  background-color: cornsilk;
+  display: flex;
+  flex-direction: column;
+}
+.header{
+  width: 100%;
+  height: 25%;
+  display: flex;
+  background-color: pink;
+  color: black;
+  justify-content: space-between;
+
+}
+
+.taskBoardArea{
+  height:100% ;
+  width: 100%;
+  background-color: yellow;
+}
