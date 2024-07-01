@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../dashboard/Dashboard.module.css'
 import Taskboard from '../taskboard/Taskboard';
+import Settings from '../../sidebar/Settings';
 //import TaskForm from '../taskboard/TaskForm';
 
 const Dashboard = () => {
@@ -12,7 +13,7 @@ const Dashboard = () => {
         <ul>
           <li>Board</li>
           <li>Analytics</li>
-          <li>Settings</li>
+          <li><Settings/></li>
         </ul>
       </div>
       <div className={styles.right}>
@@ -28,7 +29,7 @@ const Dashboard = () => {
               </select>
             </div>
           </div>
-        
+
         <div className={styles.taskBoardArea}>
         <Taskboard />
         </div>

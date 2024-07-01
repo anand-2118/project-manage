@@ -1,4 +1,4 @@
-.taskboards{
+/* .taskboards{
     display: flex;
     height: 75vh;
     width: 100%;
@@ -17,4 +17,62 @@
     justify-content: space-between;
     align-items: center;
 }
+ */
 
+ .taskboards {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    width: 100%;
+    margin: 0;
+}
+
+.column {
+    height: 100%;
+    width: 100%;
+    background-color: blanchedalmond;
+    margin: 2% 0;
+}
+
+.todoHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+    .taskboards {
+        flex-direction: row;
+    }
+
+    .column {
+        width: 20%;
+        margin: 2% 0 0 4%;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .taskboards {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .column {
+        width: 45%;
+        margin: 2% 2%;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 767px) {
+    .taskboards {
+        flex-direction: column;
+    }
+
+    .column {
+        width: 90%;
+        margin: 2% 5%;
+    }
+}

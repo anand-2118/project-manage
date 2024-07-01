@@ -8,17 +8,17 @@ const Task = ({ task, moveTask }) => {
       <p>Priority: {task.priority}</p>
       <p>Due Date: {task.dueDate}</p>
       <div className={styles.actions}>
-        {task.state !== 'backlog' && (
-          <button onClick={() => moveTask(task._id, 'backlog')}>Backlog</button>
+        {task.state !== '1' && (
+          <button onClick={() => moveTask(task._id, 1)}>Backlog</button>
         )}
-        {task.state !== 'todo' && (
-          <button onClick={() => moveTask(task._id, 'todo')}>To Do</button>
+        {task.state !== 0 && (
+          <button onClick={() => moveTask(task._id, 0)}>To Do</button>
         )}
-        {task.state !== 'in-progress' && (
-          <button onClick={() => moveTask(task._id, 'in-progress')}>In Progress</button>
+        {task.state !== 2 && (
+          <button onClick={() => moveTask(task._id, 2)}>In Progress</button>
         )}
-        {task.state !== 'done' && (
-          <button onClick={() => moveTask(task._id, 'done')}>Done</button>
+        {task.state !== 3 && (
+          <button onClick={() => moveTask(task._id, 3)}>Done</button>
         )}
       </div>
     </div>

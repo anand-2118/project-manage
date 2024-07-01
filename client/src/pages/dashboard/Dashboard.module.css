@@ -1,4 +1,4 @@
-.dashboard{
+/* .dashboard{
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -31,4 +31,92 @@
   height:100% ;
   width: 100%;
   background-color: yellow;
+} */
+
+.dashboard {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column; /* Default to column for mobile */
+}
+
+/* Sidebar */
+.sidebar {
+  height: 10vh; /* Adjust for mobile */
+  width: 100vw; /* Full width on mobile */
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right section */
+.right {
+  height: 90vh; /* Adjust for mobile */
+  width: 100vw; /* Full width on mobile */
+  background-color: cornsilk;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  height: 20vh; /* Adjust for mobile */
+  display: flex;
+  background-color: pink;
+  color: black;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+/* Task Board Area */
+.taskBoardArea {
+  height: 80vh; /* Adjust for mobile */
+  width: 100%;
+  background-color: yellow;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .dashboard {
+    flex-direction: row; /* Row for tablets and larger screens */
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 20%;
+  }
+  
+  .right {
+    height: 100%;
+    width: 80%;
+  }
+  
+  .header {
+    height: 25%;
+  }
+  
+  .taskBoardArea {
+    height: 75%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 20%;
+  }
+
+  .right {
+    width: 80%;
+  }
+
+  .header {
+    height: 25%;
+  }
+
+  .taskBoardArea {
+    height: 75%;
+  }
 }

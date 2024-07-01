@@ -1,26 +1,28 @@
 import { useState } from "react";
 import bgImage from "../../assets/Art.png";
+import { useNavigate } from "react-router-dom";
+import{register} from '../services/authServices'
+
 import styles from "./Registration.module.css";
 
 const Registration = () => {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
-	const [passwordMatchError, setPasswordMatchError] = useState(false);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (!name || !email || !password || !confirmPassword) return;
-		if (password !== confirmPassword) {
-			setPasswordMatchError(true);
-			return;
-		}
-		setPasswordMatchError(false);
-		const currentUser = { name, email, password };
-		localStorage.setItem("currentUser", JSON.stringify(currentUser));
-		console.log(JSON.parse(localStorage.getItem("currentUser")));
-	};
+	const [data, setData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      const navigate = useNavigate();
+      const handleChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value });
+      };
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = await register(data);
+        alert(response);
+       navigate("/");
+      };
+      console.log(data);
 
 	return (
 		<div className={styles.page}>
@@ -38,10 +40,10 @@ const Registration = () => {
 							name="name"
 							placeholder="Name"
 							className={styles.input}
-							value={name}
-							onChange={(e) => setName(e.target.value)}
+							value={data.name}
+							onChange={handleChange}
 						/><br/>
-						{!name && <label className={styles.label}>Field is required</label>}
+						{!data.name && <label className={styles.label}>Field is required</label>}
 					</div>
 					<div className="form-group">
 						<input
@@ -49,10 +51,10 @@ const Registration = () => {
 							name="email"
 							placeholder="Email"
 							className={styles.input}
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							value={data.email}
+							onChange={handleChange}
 						/><br/>
-						{!email && <label className={styles.label}>Field is required</label>}
+						{!data.email && <label className={styles.label}>Field is required</label>}
 					</div>
 					<div className="form-group">
 						<input
@@ -60,10 +62,10 @@ const Registration = () => {
 							name="password"
 							placeholder="Password"
 							className={styles.input}
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							value={data.password}
+							onChange={handleChange}
 						/><br/>
-						{!password && <label className={styles.label}>Field is required</label>}
+						{!data.password && <label className={styles.label}>Field is required</label>}
 					</div>
 					<div className="form-group">
 						<input
@@ -71,12 +73,11 @@ const Registration = () => {
 							name="confirmPassword"
 							placeholder="Confirm Password"
 							className={styles.input}
-							value={confirmPassword}
-							onChange={(e) => setConfirmPassword(e.target.value)}
+							value={data.confirmPassword}
+							onChange={handleChange}
 						/><br/>
-						{!confirmPassword && <label className={styles.label}>Field is required</label>}
+						{!data.confirmPassword && <label className={styles.label}>Field is required</label>}
 					</div>
-					{passwordMatchError && <p className={styles.error}>Passwords do not match</p>}
 					
 					<button
 						className={styles.submit}

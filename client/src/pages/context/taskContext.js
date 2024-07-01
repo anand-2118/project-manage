@@ -6,18 +6,20 @@ export const TaskContext = createContext();
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    taskService.getTasks().then(setTasks);
-  }, []);
-
+  const getAllTasks = () => {
+    taskService.getAllTasks().then((tasks) => {
+      setTasks(tasks);
+    });
+  }
   const addTask = (task) => {
     taskService.createTask(task).then((newTask) => {
+      console.log('newTask', newTask);
       setTasks([...tasks, newTask]);
-    });
-  };
+    })
+  }
 
   const updateTask = (taskId, updatedTask) => {
-    taskService.updateTask(taskId, updatedTask).then(() => {
+    taskService.upDateTask(taskId, updatedTask).then(() => {
       setTasks(tasks.map((task) => (task._id === taskId ? updatedTask : task)));
     });
   };
@@ -29,7 +31,7 @@ const TaskProvider = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, updateTask, deleteTask, getAllTasks }}>
       {children}
     </TaskContext.Provider>
   );

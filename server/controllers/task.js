@@ -8,7 +8,7 @@ const isPastDate = (date) => {
 
 const createTask = async (req, res) => {
     try {
-        const { title, priority, dueDate, state = 'backlog', shared = false } = req.body;
+        const { title, priority, dueDate, state = 0, shared = false } = req.body;
 
         if (!title || !priority) {
             res.status(400).send("title and priority are requirted")

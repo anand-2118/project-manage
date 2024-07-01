@@ -1,24 +1,68 @@
-import api from '../utils/api';
+import axios from "axios";
+import { BACKEND_URL } from "../utils/constant";
 
-const getTasks = () => {
-  return api.get('/tasks').then((res) => res.data);
+export const getAllTasks= async () => {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/api/task/alltasks`);
+    console.log('API Response:', response)
+    return response.data;
+  } catch (error) {
+    console.log('error')
+    return error;
+  }
 };
 
-const createTask = (task) => {
-  return api.post('/tasks', task).then((res) => res.data);
+export const getTaskByID = async (jobnumber) => {
+  try {
+    const response = await axios.get(
+      `${BACKEND_URL}/api/task/tasks/${jobnumber}`
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
 };
 
-const updateTask = (taskId, updatedTask) => {
-  return api.put(`/tasks/${taskId}`, updatedTask).then((res) => res.data);
-};
+export const createTask = async(jobData)=>{
+  try{
+    const response = await axios.post(
+      `${BACKEND_URL}/api/task/tasks`,
+      jobData,
+      {
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+    return response.data;
+  }catch(error){
+    return error
+  }
+}
 
-const deleteTask = (taskId) => {
-  return api.delete(`/tasks/${taskId}`).then((res) => res.data);
-};
+export const upDateTask = async (jobnumber, jobData) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/task/updatetask/${jobnumber}`,
+      jobData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+}
 
 export default {
-  getTasks,
-  createTask,
-  updateTask,
-  deleteTask,
-};
+  getAllTasks,createTask,upDateTask,getTaskByID,
+}
+
+
+
+

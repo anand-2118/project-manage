@@ -14,9 +14,9 @@ const taskSchema = new mongoose.Schema({
         type:Date
     },
     state: { 
-        type: String, 
-        default: 'backlog',
-        enum: ['backlog', 'todo', 'in-progress', 'done']
+        type: Number, 
+        default: 0,
+        enum: [0, 1, 2, 3]
      },
      shared: { 
         type: Boolean, 

@@ -41,20 +41,21 @@ const userRegister = async (req, res, next) => {
 
 const userLogin = async (req, res,next) => {
     try {
+        
         const { email, password } = req.body;
         if (!email || !password) {
-            res.status(400).send('please fill all the details')
+            res.status(200).send('please fill all the details')
         }
 
         const user = await User.findOne({ email });
         if (!user) {
-            res.status(400).send("user does not exist")
+            res.status(200).send("user does not exist")
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            res.status(400).send("invalid credentials");
+            res.status(200).send("invalid credentials");
         }
 
         const token = jwt.sign({ userId: user.__id }, "secret", {
@@ -68,12 +69,8 @@ const userLogin = async (req, res,next) => {
             password: user.password,
         });
     } catch (err) {
-        next(err);
+        res.status(500).send("server error");
     }
-
-
-
-
 
 }
 

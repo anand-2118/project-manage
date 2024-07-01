@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import bgImage from "../../assets/Art.png";
 import styles from './Login.module.css'; // Ensure this path is correct and the file exists
+import {login} from '../services/authServices'
+import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleSubmit = (e) => {
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+      });
+      const navigate = useNavigate();
+      const handleChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value });
+      };
+      const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (!email || !password) return;
-
-        const currentUser = { email, password };
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        console.log(JSON.parse(localStorage.getItem("currentUser")));
-    };
+        login(data).then((response) => {
+          console.log(`Welcome, ${response.data.name}`)
+         // alert(`Welcome, ${response.data.name}`);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
+          navigate("/dashboard");
+        });
+      };
 
     return (
         <div className={styles.page}>
@@ -32,11 +41,10 @@ export default function Login() {
                             name="email"
                             placeholder="Email"
                             className={styles.input}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                            onChange={handleChange}
+                            />
                         <br />
-                        {!email && <label className={styles.label}>Field is required</label>}
+                        {!data.email && <label className={styles.label}>Field is required</label>}
                     </div>
                     <div className="form-group">
                         <input
@@ -44,11 +52,10 @@ export default function Login() {
                             name="password"
                             placeholder="Password"
                             className={styles.input}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                            onChange={handleChange}
+                            />
                         <br />
-                        {!password && <label className={styles.label}>Field is required</label>}
+                        {!data.password && <label className={styles.label}>Field is required</label>}
                     </div>
                     <button
                         className={styles.submit}
@@ -62,5 +69,4 @@ export default function Login() {
                 </div>
             </div>
         </div>
-    );
-}
+    )}
