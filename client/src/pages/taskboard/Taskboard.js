@@ -10,12 +10,12 @@ import styles from '../taskboard/Taskboard.module.css'
 const Taskboard = () => {
   const { tasks, updateTask, getAllTasks } = useContext(TaskContext);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getAllTasks();
     console.log('getting all tasks');
-  }, []);
+  }, [getAllTasks]);
   const moveTask = (taskId, newState) => {
     const task = tasks.find(task => task._id === taskId);
     updateTask(taskId, { ...task, state: newState });
@@ -34,14 +34,7 @@ const Taskboard = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
+  
   return (
     <div className={styles.taskboards}>
       <div className={styles.column}>
@@ -54,7 +47,7 @@ const Taskboard = () => {
           <h2>Todo</h2>
         </div>
         <div className={styles.icons}>
-          <FontAwesomeIcon icon={faPlus} onClick={handleOpenModal} />
+          <FontAwesomeIcon icon={faPlus} onClick={()=>setShowModal(true)} />
           <FontAwesomeIcon icon={isCollapsed ? faAngleUp : faAngleDown} onClick={handleCollapse} />
         </div>
       </div>
@@ -68,7 +61,7 @@ const Taskboard = () => {
         <h2>Done</h2>
         {renderTasks(3)}
       </div>
-      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} task={null} />
+     <TaskModal isOpen={showModal} onClose={()=>setShowModal(false)} task={null} />
     </div>
   );
 };
