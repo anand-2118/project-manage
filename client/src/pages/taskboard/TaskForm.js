@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 import styles from './TaskForm.module.css'
 
-const TaskForm = ({task,onClose}) => {
+const TaskForm = ({task,onClose, userId}) => {
   const { addTask } = useContext(TaskContext);
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('medium');
@@ -17,7 +17,8 @@ const TaskForm = ({task,onClose}) => {
   };
 
   const handleSave = async () => {
-    await addTask({ title, priority, dueDate, checklist });
+    const id = userId || localStorage.getItem('userId') || '';
+    await addTask({ title, priority, dueDate, checklist, userId: id });
     setTitle('');
     setPriority('medium');
     setDueDate('');

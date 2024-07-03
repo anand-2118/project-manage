@@ -17,6 +17,7 @@ export const login = async (data)=>{
         const response = await axios.post(
             `${BACKEND_URL}/api/auth/login`, data
         );
+        console.log("11111", response.data);
         return response;
     }
     catch(error){

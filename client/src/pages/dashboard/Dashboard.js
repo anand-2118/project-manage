@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import styles from '../dashboard/Dashboard.module.css'
 import Taskboard from '../taskboard/Taskboard';
 import Settings from '../../sidebar/Settings';
+import { useLocation } from "react-router-dom";
 //import TaskForm from '../taskboard/TaskForm';
 
 const Dashboard = () => {
   const [filter, setFilter] = useState('this week');
-
+  const { state } = useLocation();
+  console.log(state);
   return (
     <div className={styles.dashboard}>
       <div className={styles.sidebar}>
@@ -31,7 +33,7 @@ const Dashboard = () => {
           </div>
 
         <div className={styles.taskBoardArea}>
-        <Taskboard />
+        <Taskboard userId={state.userId || ''} />
         </div>
       </div>
     </div>

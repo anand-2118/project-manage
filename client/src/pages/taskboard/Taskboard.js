@@ -7,15 +7,14 @@ import TaskModal from '../taskboard/Taskmodal'; // Ensure this import path is co
 import styles from '../taskboard/Taskboard.module.css'
 
 // 0 -> todo, 1 -> backlog, 2 -> in-progress, 3 -> done 
-const Taskboard = () => {
+const Taskboard = ({userId}) => {
   const { tasks, updateTask, getAllTasks } = useContext(TaskContext);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    getAllTasks();
-    console.log('getting all tasks');
-  }, [getAllTasks]);
+    getAllTasks(userId);
+  }, [userId]);
   const moveTask = (taskId, newState) => {
     const task = tasks.find(task => task._id === taskId);
     updateTask(taskId, { ...task, state: newState });
@@ -61,7 +60,7 @@ const Taskboard = () => {
         <h2>Done</h2>
         {renderTasks(3)}
       </div>
-     <TaskModal isOpen={showModal} onClose={()=>setShowModal(false)} task={null} />
+     <TaskModal isOpen={showModal} onClose={()=>setShowModal(false)} task={null} userId={userId} />
     </div>
   );
 };

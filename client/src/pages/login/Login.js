@@ -21,7 +21,11 @@ export default function Login() {
          // alert(`Welcome, ${response.data.name}`);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("userId", response.data.userId);
-          navigate("/dashboard");
+          navigate("/dashboard", {
+            state: {
+                userId: response.data.userId || ''
+            }
+          });
         });
       };
 

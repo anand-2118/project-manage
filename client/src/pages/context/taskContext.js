@@ -5,9 +5,9 @@ export const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
-
-  const getAllTasks = () => {
-    taskService.getAllTasks().then((tasks) => {
+  const getAllTasks = (userId) => {
+    console.log(userId);
+    taskService.getAllTasks(userId).then((tasks) => {
       setTasks(tasks);
     });
   }

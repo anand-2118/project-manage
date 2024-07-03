@@ -1,14 +1,18 @@
 import axios from "axios";
 import { BACKEND_URL } from "../utils/constant";
 
-export const getAllTasks= async () => {
+export const getAllTasks= async (userId) => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/api/task/alltasks`);
-    console.log('API Response:', response)
-    return response.data;
+    const id = userId || localStorage.getItem('userId') || '';
+    if(userId){
+      const response = await axios.get(`${BACKEND_URL}/api/task/alltasks/${id}`);
+      console.log('API Response:', response)
+      return response.data;  
+    }
+    return [];
   } catch (error) {
-    console.log('error')
-    return error;
+    console.log('error', userId);
+    return [];
   }
 };
 

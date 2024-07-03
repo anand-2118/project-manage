@@ -63,10 +63,9 @@ const userLogin = async (req, res,next) => {
         })
         res.status(200).json({
             token,
-            userId: user.__id,
+            userId: user._id,
             name: user.name,
             email: user.email,
-            password: user.password,
         });
     } catch (err) {
         res.status(500).send("server error");
@@ -74,4 +73,19 @@ const userLogin = async (req, res,next) => {
 
 }
 
+const logout = (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).send("Access denied. No token provided.");
+    }
+
+    try {
+        jwt.verify(token, JWT_SECRET);
+        // If using a token blacklist, save this token to the blacklist here
+        // Or delete the token on the client side to prevent further use
+        res.status(200).send("Logout successful");
+    } catch (err) {
+        res.status(400).send("Invalid token");
+    }
+};
 module.exports = { userRegister,userLogin}

@@ -8,7 +8,7 @@ const isPastDate = (date) => {
 
 const createTask = async (req, res) => {
     try {
-        const { title, priority, dueDate, state = 0, shared = false } = req.body;
+        const { title, priority, dueDate, state = 0, shared = false, userId } = req.body;
 
         if (!title || !priority) {
             res.status(400).send("title and priority are requirted")
@@ -19,19 +19,21 @@ const createTask = async (req, res) => {
             dueDate,
             state,
             shared,
-            createdBy: req.userId, // Assuming req.user is set by middleware after JWT verification
+            createdBy: userId, // Assuming req.user is set by middleware after JWT verification
         });
 
         await task.save();
         res.status(201).send(task);
     } catch (error) {
+        console.log(req.body, error);
         res.status(500).send({ message: error.message });
     }
 };
 
-const getTask = async (req, res) => {
+const getTask = async (req, res, next) => {
     try {
-        const allTasks = await Task.find({ createdBy: req.userId });
+        const { userId } = req.params;
+        const allTasks = await Task.find({ createdBy: userId });
         res.status(200).send(allTasks);
     } catch (error) {
         console.log(error);
@@ -43,20 +45,18 @@ const updateTask = async (req, res) => {
   try {
       const { title, priority, dueDate, state, shared } = req.body;
       const { id } = req.params;
-      const task = await Task.findById(id);
+      const task = await Task.findByIdAndUpdate(id);
 
       if (!task) {
           return res.status(404).json({ message: 'Task not found' });
       }
 
-      // Update task fields
       task.title = title || task.title;
       task.priority = priority || task.priority;
       task.dueDate = dueDate || task.dueDate;
       task.state = state || task.state;
       task.shared = shared !== undefined ? shared : task.shared;
 
-      // Update dueDateColor based on the state and due date
       if (task.state === 'done') {
           task.dueDateColor = 'green';
       } else if (isPastDate(task.dueDate)) {
@@ -65,7 +65,6 @@ const updateTask = async (req, res) => {
           task.dueDateColor = 'gray';
       }
 
-      // Save the updated task
       await task.save();
       res.status(200).json(task);
   } catch (error) {
